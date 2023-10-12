@@ -4,7 +4,17 @@ import pandas as pd
 import numpy as np
 from dateutil import parser
 import plotly.graph_objects as go
+from pages import 2_segundo
+from pages import 3_terceiro
 
+page = st.sidebar.selectbox("Selecione a página:", ["Página 3", "Página 2"])
+
+if page == "3_terceiro":
+    # Conteúdo da Página 1
+    st.write("Conteúdo da Página 1")
+elif page == "2_segundo":
+    # Conteúdo da Página 2
+    2_segundo.main()  # Execute a função main da página 2
 coeficienteDeDivisao = 11
 
 df = pd.read_excel(
