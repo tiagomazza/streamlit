@@ -109,7 +109,7 @@ df['ValorArtigo'] = df['ValorArtigo'].apply(converter_para_numero)
 
 #side bar
 
-st.sidebar.header("Filtros de análise:")
+
 vendedor = st.multiselect(
     "selecione o vendedor:",
     options=df["Vendedor"].unique(),
