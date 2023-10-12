@@ -14,7 +14,7 @@ if page == "terceiro":
     st.write("Conteúdo da Página 1")
 elif page == "segundo":
     # Conteúdo da Página 2
-    2_segundo.main()  # Execute a função main da página 2
+    segundo.main()  # Execute a função main da página 2
 coeficienteDeDivisao = 11
 
 df = pd.read_excel(
