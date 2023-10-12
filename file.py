@@ -4,18 +4,18 @@ import pandas as pd
 import numpy as np
 from dateutil import parser
 import plotly.graph_objects as go
-from pages import segundo
-from pages import terceiro
 
-page = st.sidebar.selectbox("Selecione a página:", ["terceiro", "segundo"])
+pages = {
+    "Página 1": "Este é o conteúdo da Página 1",
+    "Página 2": "Este é o conteúdo da Página 2",
+    "Página 3": "Este é o conteúdo da Página 3",
+}
 
-if page == "terceiro":
-    # Conteúdo da Página 1
-    terceiro.main()  # Execute a função main da página 2
-elif page == "segundo":
-    # Conteúdo da Página 2
-    segundo.main()  # Execute a função main da página 2
-coeficienteDeDivisao = 11
+# Crie um seletor de página no menu lateral
+selected_page = st.sidebar.selectbox("Selecione a página:", list(pages.keys()))
+
+# Use a seleção para exibir o conteúdo da página
+st.write(pages[selected_page])
 
 df = pd.read_excel(
     io="mes.xlsx",
