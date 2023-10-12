@@ -1,7 +1,8 @@
 import plotly_express as px
 import streamlit as st
 import pandas as pd
-import numpy asimport streamlit as st
+import numpy as np
+import streamlit as st
 
 # Crie um dicionário de páginas com nomes e conteúdos
 pages = {
