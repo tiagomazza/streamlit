@@ -7,7 +7,7 @@ import plotly.graph_objects as go
 from pages import segundo
 from pages import terceiro
 
-page = st.sidebar.selectbox("Selecione a página:", ["Página 3", "Página 2"])
+page = st.sidebar.selectbox("Selecione a página:", ["terceiro", "segundo"])
 
 if page == "terceiro":
     # Conteúdo da Página 1
