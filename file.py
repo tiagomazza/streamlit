@@ -11,7 +11,7 @@ page = st.sidebar.selectbox("Selecione a página:", ["Página 3", "Página 2"])
 
 if page == "terceiro":
     # Conteúdo da Página 1
-    st.write("Conteúdo da Página 1")
+terceiro.main()  # Execute a função main da página 2
 elif page == "segundo":
     # Conteúdo da Página 2
     segundo.main()  # Execute a função main da página 2
