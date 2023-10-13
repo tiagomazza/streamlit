@@ -20,4 +20,3 @@ df = df[1:]
 df.reset_index(drop=True, inplace=True)
 
 print(df)
-st.write(df)
