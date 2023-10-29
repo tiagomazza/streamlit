@@ -133,32 +133,36 @@ df2 = pd.read_excel(
 
 
 df2 = df2.iloc[9:]
-novos_nomes2 = df.iloc[0]
-df2.columns = novos_nomes2
+
+df2 = df2.drop(['Unnamed: 26','Unnamed: 25','Unnamed: 24','Unnamed: 23','Unnamed: 22','Unnamed: 20','Unnamed: 19',
+                'Unnamed: 17','Unnamed: 16','Unnamed: 15','Unnamed: 14','Unnamed: 13','Unnamed: 12','Unnamed: 10',
+                'Unnamed: 9','Unnamed: 8','Unnamed: 7','Unnamed: 6','Unnamed: 4','Unnamed: 3','Unnamed: 1','Unnamed: 0'], axis =1)
+
+
+
+#novos_nomes2 = df.iloc[0]
+# df2.columns = novos_nomes2
 df2 = df2.dropna(axis=1, how='all')
 df2 = df2.dropna(how='all')
 df2 = df2[1:]
 df2.reset_index(drop=True, inplace=True)
 
 df2.rename(columns={'Documento': 'Cliente'}, inplace=True)
-df2.drop(df2.columns[0], axis=1, inplace=True)
-df2.drop(df2.columns[9], axis=1, inplace=True)
 
-# df2["CodigoCliente"] = df.iloc[:, 0]
-# df2["Data"] = df2.iloc[:, 0]
+df2["CodigoCliente"] = df.iloc[:, 0]
+df2["Data"] = df2.iloc[:, 0]
 
-# df2 = df2.apply(converter_e_copiar, axis=1)
+df2 = df2.apply(converter_e_copiar, axis=1)
 
-# df2 = df2.apply(copiar_se_nao_int, axis=1)
+df2 = df2.apply(copiar_se_nao_int, axis=1)
 
-# df2 = df2.dropna(subset=['Data'])
-# df2 = df2.dropna(subset=['Artigo'])
-# df2['Data'] = pd.to_datetime(df2['Data'])
-# tipo = df2["Data"].dtype
-# df2 = df2.drop(['Cliente', 'Descrição'], axis=1)
-# df2.dropna(axis=1, inplace=True)
-# df2 = df2.iloc[:, 1:]
-
+df2 = df2.dropna(subset=['Data'])
+df2 = df2.dropna(subset=['Unnamed: 11'])
+df2['Data'] = pd.to_datetime(df2['Data'])
+tipo = df2["Data"].dtype
+df2.dropna(axis=1, inplace=True)
+df2 = df2.iloc[:, 1:]
+print(df2)
 # df2 ['Cliente'] = df.apply(lambda row:row['Data'] if row['Artigo'] != '' else None, axis=1)
 # df2['Cliente'] = pd.to_numeric(df2['Cliente'], errors='coerce')
 # df2['Cliente'] = df['Cliente'].apply(lambda x: x if not pd.isna(x) else np.nan).ffill()
@@ -382,4 +386,3 @@ df2.drop(df2.columns[9], axis=1, inplace=True)
 #     """
 # st.markdown(hide_st_style, unsafe_allow_html=True)
 
-print (df)
