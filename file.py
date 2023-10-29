@@ -67,9 +67,8 @@ df = df.dropna(subset=['Artigo'])
 df['Data'] = pd.to_datetime(df['Data'])
 tipo = df["Data"].dtype
 df = df.drop(['Cliente', 'Descrição'], axis=1)
-
-
-
+df.dropna(axis=1, inplace=True)
+df = df.iloc[:, 1:]
 
 df ['Cliente'] = df.apply(lambda row:row['Data'] if row['Artigo'] != '' else None, axis=1)
 df['Cliente'] = pd.to_numeric(df['Cliente'], errors='coerce')
@@ -82,8 +81,48 @@ df['Mes_Ano'] = df['Data'].dt.strftime('%m-%Y')
 
 df = df.sort_values(by='Cliente')
 
+df3 = pd.read_excel(
+    io="listagens.xlsx",
+    engine="openpyxl",
+    sheet_name= "Fornecedores",
+    skiprows=0,
+    usecols="A:AC",
+    nrows=10000
+)
+
+df['CodArtigo'] = df['Artigo'].astype(str).str[:3].astype(int)
+fornecedor_dict = df3.set_index('Artigo')['Fornecedor'].to_dict()
+df['Fornecedor'] = df['CodArtigo'].map(fornecedor_dict)
+
+df4 = pd.read_excel(
+    io="listagens.xlsx",
+    engine="openpyxl",
+    sheet_name= "Clientes",
+    skiprows=0,
+    usecols="A:AC",
+    nrows=10000
+)
+
+vendedor_dict = df4.set_index('Cliente')['Vendedor'].to_dict()
+df['Vendedor'] = df['CodigoCliente'].map(vendedor_dict)
+
+cliente_dict = df4.set_index('Cliente')['Nome'].to_dict()
+df['NomeCliente'] = df['CodigoCliente'].map(cliente_dict)
+
+df5 = pd.read_excel(
+    io="listagens.xlsx",
+    engine="openpyxl",
+    sheet_name= "Vendedores",
+    skiprows=0,
+    usecols="A:AC",
+    nrows=10000
+)
+
+NomeVendedor_dict = df5.set_index('Vendedor')['Nome'].to_dict()
+df['NomeVendedor'] = df['Vendedor'].map(NomeVendedor_dict)
+
 df2 = pd.read_excel(
-    io="mes.xlsx",
+    io="ano.xlsx",
     engine="openpyxl",
     sheet_name= "Sheet1",
     skiprows=0,
@@ -92,6 +131,52 @@ df2 = pd.read_excel(
 )
 
 
+
+df2 = df2.iloc[9:]
+novos_nomes2 = df.iloc[0]
+df2.columns = novos_nomes2
+df2 = df2.dropna(axis=1, how='all')
+df2 = df2.dropna(how='all')
+df2 = df2[1:]
+df2.reset_index(drop=True, inplace=True)
+
+df2.rename(columns={'Documento': 'Cliente'}, inplace=True)
+df2.drop(df2.columns[0], axis=1, inplace=True)
+df2.drop(df2.columns[9], axis=1, inplace=True)
+
+# df2["CodigoCliente"] = df.iloc[:, 0]
+# df2["Data"] = df2.iloc[:, 0]
+
+# df2 = df2.apply(converter_e_copiar, axis=1)
+
+# df2 = df2.apply(copiar_se_nao_int, axis=1)
+
+# df2 = df2.dropna(subset=['Data'])
+# df2 = df2.dropna(subset=['Artigo'])
+# df2['Data'] = pd.to_datetime(df2['Data'])
+# tipo = df2["Data"].dtype
+# df2 = df2.drop(['Cliente', 'Descrição'], axis=1)
+# df2.dropna(axis=1, inplace=True)
+# df2 = df2.iloc[:, 1:]
+
+# df2 ['Cliente'] = df.apply(lambda row:row['Data'] if row['Artigo'] != '' else None, axis=1)
+# df2['Cliente'] = pd.to_numeric(df2['Cliente'], errors='coerce')
+# df2['Cliente'] = df['Cliente'].apply(lambda x: x if not pd.isna(x) else np.nan).ffill()
+# df2['Cliente'] = df['Cliente'].astype(str)
+# df2 = df[~(df['Data'] == 'Total Cliente')]
+# df2.dropna(subset=['Valor Líquido'], inplace=True)
+# df2['Data'] = pd.to_datetime(df2['Data'])
+# df2['Mes_Ano'] = df2['Data'].dt.strftime('%m-%Y')
+
+# df2 = df2.sort_values(by='Cliente')
+
+# df2['CodArtigo'] = df2['Artigo'].astype(str).str[:3].astype(int)
+# df2['Fornecedor'] = df['CodArtigo'].map(fornecedor_dict)
+# df2['Vendedor'] = df2['CodigoCliente'].map(vendedor_dict)
+# df2['NomeCliente'] = df2['CodigoCliente'].map(cliente_dict)
+# df2['NomeVendedor'] = df2['Vendedor'].map(NomeVendedor_dict)
+
+# print (df2)
 # df2 = df2.iloc[10:]
 # df2 = df2.dropna(axis=1, how='all')
 # df2 = df2.dropna(how='all')
@@ -296,3 +381,5 @@ df2 = pd.read_excel(
 #     </style>
 #     """
 # st.markdown(hide_st_style, unsafe_allow_html=True)
+
+print (df)
