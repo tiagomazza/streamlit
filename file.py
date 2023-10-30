@@ -231,7 +231,7 @@ print (df2['Fornecedor'],df2['CodigoCliente'])
 
 #---side bar
 st.sidebar.header("Menu")
-vendedores_disponiveis = df["vendedor"].dropna().unique()
+vendedores_disponiveis = df["Vendedor"].dropna().unique()
 vendedor = st.sidebar.multiselect(
     "selecione o vendedor:",
     options=vendedores_disponiveis.tolist(),
