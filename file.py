@@ -254,7 +254,7 @@ cliente = st.sidebar.multiselect(
     "selecione o Cliente:",
     options=df["Cliente"].unique(),
     default=df["Cliente"].unique()
-# )
+)
 # df_selection =df.query(
 #     "Vendedor == @vendedor & Cliente==@cliente & Mes_Ano==@mes_Ano & Marca==@marca"
 # )
