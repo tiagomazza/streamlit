@@ -88,7 +88,7 @@ df3 = pd.read_excel(
     engine="openpyxl",
     sheet_name= "Fornecedores",
     skiprows=0,
-    usecols="A:AC",
+    usecols="A:B",
     nrows=10000
 )
 
@@ -101,7 +101,7 @@ df4 = pd.read_excel(
     engine="openpyxl",
     sheet_name= "Clientes",
     skiprows=0,
-    usecols="A:AC",
+    usecols="A:C",
     nrows=10000
 )
 
@@ -116,7 +116,7 @@ df5 = pd.read_excel(
     engine="openpyxl",
     sheet_name= "Vendedores",
     skiprows=0,
-    usecols="A:AC",
+    usecols="A:B",
     nrows=10000
 )
 
