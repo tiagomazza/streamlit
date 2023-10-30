@@ -46,6 +46,7 @@ def converter_e_copiar(row):
     codigo_anterior = row['CodigoCliente']
     return row
 
+
 codigo_anterior = None
 
 
@@ -80,6 +81,7 @@ df['Data'] = pd.to_datetime(df['Data'])
 df['Mes_Ano'] = df['Data'].dt.strftime('%m-%Y')
 
 df = df.sort_values(by='Cliente')
+
 
 df3 = pd.read_excel(
     io="listagens.xlsx",
@@ -130,14 +132,13 @@ df2 = pd.read_excel(
     nrows=10000
 )
 
-
-
-df2 = df2.iloc[9:]
-
 df2 = df2.drop(['Unnamed: 26','Unnamed: 25','Unnamed: 24','Unnamed: 23','Unnamed: 22','Unnamed: 20','Unnamed: 19',
                 'Unnamed: 17','Unnamed: 16','Unnamed: 15','Unnamed: 14','Unnamed: 13','Unnamed: 12','Unnamed: 10',
                 'Unnamed: 9','Unnamed: 8','Unnamed: 7','Unnamed: 6','Unnamed: 4','Unnamed: 3','Unnamed: 1','Unnamed: 0'], axis =1)
 
+
+
+df2 = df2.iloc[9:]
 
 
 #novos_nomes2 = df.iloc[0]
@@ -147,14 +148,15 @@ df2 = df2.dropna(how='all')
 df2 = df2[1:]
 df2.reset_index(drop=True, inplace=True)
 
-df2.rename(columns={'Documento': 'Cliente'}, inplace=True)
+df2.rename(columns={'A. BORGES DO AMARAL, Lda.': 'Cliente'}, inplace=True)
 
-df2["CodigoCliente"] = df.iloc[:, 0]
+df2["CodigoCliente"] = df['Cliente']
 df2["Data"] = df2.iloc[:, 0]
 
-df2 = df2.apply(converter_e_copiar, axis=1)
 
+df2 = df2.apply(converter_e_copiar, axis=1)
 df2 = df2.apply(copiar_se_nao_int, axis=1)
+
 
 df2 = df2.dropna(subset=['Data'])
 df2 = df2.dropna(subset=['Unnamed: 11'])
@@ -162,33 +164,36 @@ df2['Data'] = pd.to_datetime(df2['Data'])
 tipo = df2["Data"].dtype
 df2.dropna(axis=1, inplace=True)
 df2 = df2.iloc[:, 1:]
-print(df2)
-# df2 ['Cliente'] = df.apply(lambda row:row['Data'] if row['Artigo'] != '' else None, axis=1)
-# df2['Cliente'] = pd.to_numeric(df2['Cliente'], errors='coerce')
-# df2['Cliente'] = df['Cliente'].apply(lambda x: x if not pd.isna(x) else np.nan).ffill()
-# df2['Cliente'] = df['Cliente'].astype(str)
-# df2 = df[~(df['Data'] == 'Total Cliente')]
-# df2.dropna(subset=['Valor Líquido'], inplace=True)
-# df2['Data'] = pd.to_datetime(df2['Data'])
-# df2['Mes_Ano'] = df2['Data'].dt.strftime('%m-%Y')
 
-# df2 = df2.sort_values(by='Cliente')
 
-# df2['CodArtigo'] = df2['Artigo'].astype(str).str[:3].astype(int)
-# df2['Fornecedor'] = df['CodArtigo'].map(fornecedor_dict)
-# df2['Vendedor'] = df2['CodigoCliente'].map(vendedor_dict)
-# df2['NomeCliente'] = df2['CodigoCliente'].map(cliente_dict)
-# df2['NomeVendedor'] = df2['Vendedor'].map(NomeVendedor_dict)
 
-# print (df2)
-# df2 = df2.iloc[10:]
-# df2 = df2.dropna(axis=1, how='all')
-# df2 = df2.dropna(how='all')
 
-# novos_nomes = df2.iloc[0]
-# df2.columns = novos_nomes
-# df2 = df[1:]
-# df2.reset_index(drop=True, inplace=True)
+df2 ['Cliente'] = df.apply(lambda row:row['Data'] if row['Artigo'] != '' else None, axis=1)
+df2['Cliente'] = pd.to_numeric(df2['Cliente'], errors='coerce')
+df2['Cliente'] = df['Cliente'].apply(lambda x: x if not pd.isna(x) else np.nan).ffill()
+df2['Cliente'] = df['Cliente'].astype(str)
+df2 = df[~(df['Data'] == 'Total Cliente')]
+df2.dropna(subset=['Valor Líquido'], inplace=True)
+df2['Data'] = pd.to_datetime(df2['Data'])
+df2['Mes_Ano'] = df2['Data'].dt.strftime('%m-%Y')
+
+df2 = df2.sort_values(by='Cliente')
+
+df2['CodArtigo'] = df2['Artigo'].astype(str).str[:3].astype(int)
+df2['Fornecedor'] = df['CodArtigo'].map(fornecedor_dict)
+df2['Vendedor'] = df2['CodigoCliente'].map(vendedor_dict)
+df2['NomeCliente'] = df2['CodigoCliente'].map(cliente_dict)
+df2['NomeVendedor'] = df2['Vendedor'].map(NomeVendedor_dict)
+
+
+df2 = df2.iloc[10:]
+df2 = df2.dropna(axis=1, how='all')
+df2 = df2.dropna(how='all')
+
+print (df['Fornecedor'],df['CodigoCliente'])
+print (df2['Fornecedor'],df2['CodigoCliente'])
+
+
 # #valor a ser dividido o anual do ano passado afim de uma média mensal.
 # fator_de_divisao = 11
 
@@ -224,31 +229,31 @@ print(df2)
 
 
 
-# #---side bar
-# st.sidebar.header("Menu")
-# vendedores_disponiveis = df["Vendedor"].dropna().unique()
-# vendedor = st.sidebar.multiselect(
-#     "selecione o vendedor:",
-#     options=vendedores_disponiveis.tolist(),
-#     default=vendedores_disponiveis.tolist()
-# )
+#---side bar
+st.sidebar.header("Menu")
+vendedores_disponiveis = df["vendedor"].dropna().unique()
+vendedor = st.sidebar.multiselect(
+    "selecione o vendedor:",
+    options=vendedores_disponiveis.tolist(),
+    default=vendedores_disponiveis.tolist()
+)
 
-# marca = st.sidebar.multiselect(
-#     "selecione a Marca",
-#     options=df["Marca"].unique(),
-#     default=df["Marca"].unique()
-# )
-# mes_Ano = st.sidebar.multiselect(
-#     "selecione o Mês Ano",
-#     options=df["Mes_Ano"].unique(),
-#     default=df["Mes_Ano"].unique()
+marca = st.sidebar.multiselect(
+    "selecione a Marca",
+    options=df["Fornecedor"].unique(),
+    default=df["Fornecedor"].unique()
+)
+mes_Ano = st.sidebar.multiselect(
+    "selecione o Mês Ano",
+    options=df["Mes_Ano"].unique(),
+    default=df["Mes_Ano"].unique()
 
-# )
+)
 
-# cliente = st.sidebar.multiselect(
-#     "selecione o Cliente:",
-#     options=df["Cliente"].unique(),
-#     default=df["Cliente"].unique()
+cliente = st.sidebar.multiselect(
+    "selecione o Cliente:",
+    options=df["Cliente"].unique(),
+    default=df["Cliente"].unique()
 # )
 # df_selection =df.query(
 #     "Vendedor == @vendedor & Cliente==@cliente & Mes_Ano==@mes_Ano & Marca==@marca"
