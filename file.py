@@ -129,7 +129,7 @@ df2 = pd.read_excel(
     sheet_name= "Sheet1",
     skiprows=0,
     usecols="A:AC",
-    nrows=10000
+    nrows=66000
 )
 
 df2 = df2.drop(['Unnamed: 26','Unnamed: 25','Unnamed: 24','Unnamed: 23','Unnamed: 22','Unnamed: 20','Unnamed: 19',
