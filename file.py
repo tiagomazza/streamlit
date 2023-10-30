@@ -142,8 +142,6 @@ df2 = df2.drop(['Unnamed: 26','Unnamed: 25','Unnamed: 24','Unnamed: 23','Unnamed
 df2 = df2.iloc[9:]
 
 
-#novos_nomes2 = df.iloc[0]
-# df2.columns = novos_nomes2
 df2 = df2.dropna(axis=1, how='all')
 df2 = df2.dropna(how='all')
 df2 = df2[1:]
@@ -190,9 +188,6 @@ df2['NomeVendedor'] = df2['Vendedor'].map(NomeVendedor_dict)
 df2 = df2.iloc[10:]
 df2 = df2.dropna(axis=1, how='all')
 df2 = df2.dropna(how='all')
-
-print (df['Fornecedor'],df['CodigoCliente'])
-print (df2['Fornecedor'],df2['CodigoCliente'])
 
 
 # #valor a ser dividido o anual do ano passado afim de uma média mensal.
