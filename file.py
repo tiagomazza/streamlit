@@ -128,9 +128,10 @@ df2 = pd.read_excel(
     engine="openpyxl",
     sheet_name= "Sheet1",
     skiprows=0,
-    usecols="A:AC",
+    usecols=range (29),
     nrows=66000
 )
+    
 
 df2 = df2.drop(['Unnamed: 26','Unnamed: 25','Unnamed: 24','Unnamed: 23','Unnamed: 22','Unnamed: 20','Unnamed: 19',
                 'Unnamed: 17','Unnamed: 16','Unnamed: 15','Unnamed: 14','Unnamed: 13','Unnamed: 12','Unnamed: 10',
